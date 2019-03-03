@@ -1,6 +1,6 @@
 # rsp_tcp
 
-(c)2018 F4FHH Nicolas (f4fhh@ducor.fr). Licensed under the GNU GPL V3
+(c)2019 F4FHH Nicolas (f4fhh@ducor.fr). Licensed under the GNU GPL V3
 
 ## a rtl_tcp compatible IQ server for the RSP range of SDRPlay SDR
 
@@ -24,6 +24,7 @@ As the rtl_tcp protocol is only 8 bits IQ, man will loose the major advantage of
  -s samplerate in Hz (default: 2048000 Hz)
  -n max number of linked list buffers to keep (default: 500)
  -v Verbose output (debug) enable (default: disabled)
+ -E extended mode full RSP bit rate and controls (default: RTL mode)
 ```
 ## USAGE
  - RTL Tuner AGC is mapped to RSP RF AGC
@@ -52,9 +53,11 @@ As the rtl_tcp protocol is only 8 bits IQ, man will loose the major advantage of
 
 ## HISTORY
  - Version 0.1.0: Initial build
+ - Version 1.1.0: Integration of the extensions and fixes made by the SDRPlay team. Many thanks to them. see their github at [https://github.com/SDRplay](https://github.com/SDRplay)
 
 ## CREDITS
  - [Open Source Mobile Communications (OSMOCOM)](https://github.com/osmocom/rtl-sdr.git) team for the original rtl_tcp code
  - [Thierry Leconte](https://github.com/TLeconte/airspy_tcp.git) for many ideas that I found in his Airspy port of rtl_tcp
  - [Tony Hoyle](https://github.com/TonyHoyle/sdrplay.git) for the initial idea
  - [Pothosware](https://github.com/pothosware) for the cmake build examples
+ - [SDRPlay](https://github.com/SDRplay) for the extensions to support all current RSP devices
