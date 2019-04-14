@@ -1,3 +1,5 @@
 build/
 *~
 *.swp
+/.vscode/ipch/81851b1a7e270eed/RSP_TCP.ipch
+/.vscode/ipch/81851b1a7e270eed/mmap_address.bin
