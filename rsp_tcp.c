@@ -116,7 +116,7 @@ static int llbuf_num = 500;
 static volatile int do_exit = 0;
 
 #define RSP_TCP_VERSION_MAJOR (1)
-#define RSP_TCP_VERSION_MINOR (1)
+#define RSP_TCP_VERSION_MINOR (2)
 
 #define MAX_DECIMATION_FACTOR (64)
 #define MAX_DEVS 4

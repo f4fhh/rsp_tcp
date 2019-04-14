@@ -53,7 +53,7 @@ As the rtl_tcp protocol is only 8 bits IQ, man will loose the major advantage of
 
 ## HISTORY
  - Version 0.1.0: Initial build
- - Version 1.1.0: Integration of the extensions and fixes made by the SDRPlay team. Many thanks to them. see their github at [https://github.com/SDRplay](https://github.com/SDRplay)
+ - Version 1.1.0: Integration of the extensions and fixes made by the SDRPlay team. Many thanks to them. see their github at [https://github.com/SDRplay](https://- Version 1.2.0: Integration of some fixes made by the SDRPlay team.
 
 ## CREDITS
  - [Open Source Mobile Communications (OSMOCOM)](https://github.com/osmocom/rtl-sdr.git) team for the original rtl_tcp code
