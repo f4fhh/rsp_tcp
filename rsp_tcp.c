@@ -115,9 +115,6 @@ static int llbuf_num = 500;
 
 static volatile int do_exit = 0;
 
-#define RSP_TCP_VERSION_MAJOR (1)
-#define RSP_TCP_VERSION_MINOR (2)
-
 #define MAX_DECIMATION_FACTOR (64)
 #define MAX_DEVS 4
 #define WORKER_TIMEOUT_SEC 3
@@ -445,8 +442,9 @@ void rx_callback(short* xi, short* xq, unsigned int firstSampleNum, int grChange
 			char *data;
 			data = rpt->data;
 			for (i = 0; i < numSamples; i++, xi++, xq++) {
-				*(data++) = (unsigned char)(((*xi << sample_shift) >> 8) + 128);
-				*(data++) = (unsigned char)(((*xq << sample_shift) >> 8) + 128);
+			// Calculation to 8 bit was wrong, this one is correct and better. Bas ON5HB.
+				*(data++) = (unsigned char)(((*xi << 1) + 16384) / 128) + 0.5;
+				*(data++) = (unsigned char)(((*xq << 1) + 16384) / 128) + 0.5;
 			}
 
 			rpt->len = 2 * numSamples;
@@ -1440,27 +1438,29 @@ int init_rsp_device(unsigned int sr, unsigned int freq, int enable_bias_t, unsig
 
 void usage(void)
 {
-	fprintf(stderr, "rsp_tcp, an I/Q spectrum server for SDRPlay receivers "
-#ifdef SERVER_VERSION
-		"VERSION "SERVER_VERSION
-#endif
+	fprintf(stderr, SERVER_NAME", an I/Q spectrum server for SDRPlay receivers, "
+		"version "SERVER_VERSION
 		"\n\n"
-		"Usage:\t[-a listen address]\n"
-		"\t[-p listen port (default: 1234)]\n"
-		"\t[-d RSP device to use (default: 1, first found)]\n"
-		"\t[-P Antenna Port select* (0/1/2, default: 0, Port A)]\n"
-		"\t[-T Bias-T enable* (default: disabled)]\n"
-		"\t[-R Refclk output enable* (default: disabled)]\n"
-		"\t[-f frequency to tune to [Hz]]\n"
-		"\t[-s samplerate in Hz (default: 2048000 Hz)]\n"
-		"\t[-n max number of linked list buffers to keep (default: 500)]\n"
-		"\t[-v Verbose output (debug) enable (default: disabled)]\n"
-		"\t[-E RSP extended mode enable (default: rtl_tcp compatible mode)\n"
-		"\t[-A AM notch enable (default: disabled)\n"
-		"\t[-B Broadcast notch enable (default: disabled)\n"
-		"\t[-D DAB notch enable (default: disabled)\n"
-		"\t[-F RF notch enable (default: disabled)\n"
-		"\t[-b Sample bit-depth (8/16 default: 8)\n");
+		"Usage:\n"
+		"\t"SERVER_NAME" [OPTIONS]\n\n"
+		"Options:\n"
+		"\t-a listen address\n"
+		"\t-p listen port (default: 1234)\n"
+		"\t-d RSP device to use (default: 1, first found)\n"
+		"\t-P Antenna Port select* (0/1/2, default: 0, Port A)\n"
+		"\t-T Bias-T enable* (default: disabled)\n"
+		"\t-R Refclk output enable* (default: disabled)\n"
+		"\t-f frequency to tune to [Hz]\n"
+		"\t-s samplerate in Hz (default: 2048000 Hz)\n"
+		"\t-n max number of linked list buffers to keep (default: 500)\n"
+		"\t-v Verbose output (debug) enable (default: disabled)\n"
+		"\t-E RSP extended mode enable (default: rtl_tcp compatible mode)\n"
+		"\t-A AM notch enable (default: disabled)\n"
+		"\t-B Broadcast notch enable (default: disabled)\n"
+		"\t-D DAB notch enable (default: disabled)\n"
+		"\t-F RF notch enable (default: disabled)\n"
+		"\t-b Sample bit-depth (8/16 default: 8)\n"
+		"\t-h This help\n");
 	exit(1);
 }
 
@@ -1500,9 +1500,9 @@ int main(int argc, char **argv)
 	struct sigaction sigact, sigign;
 #endif
 
-	fprintf(stderr, "rsp_tcp version %d.%d\n\n", RSP_TCP_VERSION_MAJOR, RSP_TCP_VERSION_MINOR);
+	fprintf(stderr, SERVER_NAME" version %s\n\n", SERVER_VERSION);
 
-	while ((opt = getopt(argc, argv, "a:p:f:b:s:n:d:P:TvADBFRE")) != -1) {
+	while ((opt = getopt(argc, argv, "a:p:f:b:s:n:d:P:TvADBFREh")) != -1) {
 		switch (opt) {
 		case 'd':
 			device = atoi(optarg) - 1;
@@ -1555,11 +1555,12 @@ int main(int argc, char **argv)
 		case 'F':
 			notch |= RSP_TCP_NOTCH_RF;
 			break;
+		case 'h':
 		default:
 			usage();
 			break;
 		}
-}
+	}
 
 	if (bit_depth != 8 && bit_depth != 16) {
 		usage();
