@@ -2,6 +2,12 @@
 
 (c)2019 F4FHH Nicolas (f4fhh@ducor.fr). Licensed under the GNU GPL V3
 
+## From 2020-1-1 rsp_tcp development is discontinued.
+
+I would like to say big thanks to everyone who supported me during this project.
+
+Please go to the repository of [Bas ON5HB](https://github.com/ON5HB/rsp_tcp.git) who forked this project and fixed/enhanced it.
+
 ## a rtl_tcp compatible IQ server for the RSP range of SDRPlay SDR
 
 rsp_tcp is a direct port of [rtl_tcp](https://github.com/osmocom/rtl-sdr) for the RSP range of [SDRPlay SDR](https://www.sdrplay.com/).
@@ -61,3 +67,4 @@ As the rtl_tcp protocol is only 8 bits IQ, man will loose the major advantage of
  - [Tony Hoyle](https://github.com/TonyHoyle/sdrplay.git) for the initial idea
  - [Pothosware](https://github.com/pothosware) for the cmake build examples
  - [SDRPlay](https://github.com/SDRplay) for the extensions to support all current RSP devices
+ - [Bas ON5HB](https://github.com/ON5HB) who forked this project and fixed / enhanced it 
